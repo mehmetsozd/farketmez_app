@@ -1,0 +1,69 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/VisbyBold Italic.otf",
+      "sha1": "6729b71a71aa375f3fd9af08424bc1893be3eb71"
+    },
+    {
+      "path": "src/assets/fonts/VisbyBold.otf",
+      "sha1": "04ec39a46ffacc7a717f89eb32dfc13c1bd6bf02"
+    },
+    {
+      "path": "src/assets/fonts/VisbyExtrabold Italic.otf",
+      "sha1": "0330834d92ce4bc2ae513217c581cf480a8be353"
+    },
+    {
+      "path": "src/assets/fonts/VisbyExtrabold.otf",
+      "sha1": "0cfde9a242ed450ec856fa28bdb0bad4f2934972"
+    },
+    {
+      "path": "src/assets/fonts/VisbyHeavy Italic.otf",
+      "sha1": "f00e72d3eeb4d8de98077e3b61b1f80190b2dde0"
+    },
+    {
+      "path": "src/assets/fonts/VisbyHeavy.otf",
+      "sha1": "4971e6581e31279c4df50cee66d446475115652e"
+    },
+    {
+      "path": "src/assets/fonts/VisbyItalic.otf",
+      "sha1": "e8fa70a6e99d4777c7cda84a35c1032d29f3b315"
+    },
+    {
+      "path": "src/assets/fonts/VisbyLight Italic.otf",
+      "sha1": "176c73e601c00ead45253a9ce5d211e0ff8a05ec"
+    },
+    {
+      "path": "src/assets/fonts/VisbyLight.otf",
+      "sha1": "f9b85a8c16dbb7e12184ac46a5885c21c09dc20c"
+    },
+    {
+      "path": "src/assets/fonts/VisbyMedium Italic.otf",
+      "sha1": "d63899279a27784e9762b282fba3a1129e813a52"
+    },
+    {
+      "path": "src/assets/fonts/VisbyMedium.otf",
+      "sha1": "692b1cb9423e4527897890302e6628be21623a05"
+    },
+    {
+      "path": "src/assets/fonts/VisbyRegular.otf",
+      "sha1": "d37070d866e3d3596d23054272593afe50226a41"
+    },
+    {
+      "path": "src/assets/fonts/VisbySemibold Italic.otf",
+      "sha1": "e0ad1b52d509935d02f0ba8899df2ad77edb17ad"
+    },
+    {
+      "path": "src/assets/fonts/VisbySemibold.otf",
+      "sha1": "890e57fc60d32d759b85e51b242845e062f87512"
+    },
+    {
+      "path": "src/assets/fonts/VisbyThin Italic.otf",
+      "sha1": "a12342836b264afab3f8f287f3590ccdc67dde43"
+    },
+    {
+      "path": "src/assets/fonts/VisbyThin.otf",
+      "sha1": "d724222c4afea1086a491c046fbb213681b06c97"
+    }
+  ]
+}

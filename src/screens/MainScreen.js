@@ -8,11 +8,14 @@ import {
  Image,
  TouchableWithoutFeedback,
  FlatList,
- TextInput
+ TouchableOpacity,
+ TextInput,
+ ScrollView
 } from 'react-native';
 import { windowHeight, windowWidth } from '../global';
 import FlipCard from '../components/FlipCoin/FlipCard';
 import LinearGradient from 'react-native-linear-gradient';
+import ResultModal from '../components/resultModal';
 
 function MainScreen({ navigation }) {
  const backgroundImage = require('../assets/images/mainbg.png');
@@ -28,6 +31,10 @@ function MainScreen({ navigation }) {
 
  const [editingItemId, setEditingItemId] = useState(null);
  const [options, setOptions] = useState(fakeData);
+ const [editedText, setEditedText] = useState("Seçenek");
+ const [resultModalVisible, setResultModalVisible] = React.useState(false);
+ const [result, setResult] = useState(null);
+
 
  const handleEditPress = (itemId) => {
   setEditingItemId(itemId);
@@ -52,96 +59,147 @@ function MainScreen({ navigation }) {
   setEditingItemId(null);
  };
 
- return (
-  <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.container}>
-   <SafeAreaView style={{ flex: 1, paddingRight: 15, paddingLeft: 15, justifyContent: 'space-between' }}>
-    <View style={styles.topRow}>
-     <View>
-      <Text style={styles.title}>harbiden</Text>
-      <Text style={styles.title2}>Fark Etmez.</Text>
-     </View>
-     <Image style={{ width: windowWidth * .075 }} resizeMode='contain' source={require('../assets/images/menu.png')} />
-    </View>
-    {selectedView == 0 &&
-     (
-      <View style={styles.mainView}>
-       <FlatList
-        showsVerticalScrollIndicator={false}
-        style={{ marginTop: 20, marginBottom: 50 }}
-        data={options}
-        renderItem={({ item }) => (
-         <TouchableWithoutFeedback onPress={() => { handleEditPress(item.id) }} >
-          <LinearGradient
-           start={{ x: 0, y: 0 }}
-           end={{ x: 0, y: 1 }}
-           colors={['rgba(255, 255, 255, 0.4)', 'transparent']}
-           style={[
-            styles.optionButton,
-            editingItemId === item.id && styles.editingOption,
-           ]}
-          >
-           <TextInput
-            style={styles.optionText}
-            value={item.text}
-            onChangeText={(newText) => handleSavePress(item.id, newText)}
-            editable={editingItemId === item.id}
-           />
-          </LinearGradient>
-         </TouchableWithoutFeedback>
-        )}
-        ListFooterComponent={() => (
-         <Text style={{ color: 'white', fontSize: 25, alignSelf: 'center', marginTop: 20 }}>+</Text>
-        )}
-       />
-       <TouchableWithoutFeedback>
-        <View style={styles.listFooter}>
-         <Text style={[styles.selectedText, { color: 'black' }]} >Fark Etmez</Text>
-        </View>
-       </TouchableWithoutFeedback>
-      </View>
-     )
-    }
-    {selectedView == 1 &&
-     (
-      <View style={styles.headsOrNails}>
-       <FlipCard
+ const handleFarketmez = () => {
+  const interval = 100;
+  const totalDuration = 3000;
+  const delayToShowResultModal = 750; // Half a second delay
+  const numIterations = totalDuration / interval;
 
-        friction={6}
-        onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
-       >
-        <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/nails.png')}></Image>
-        <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/heads.png')}></Image>
-       </FlipCard>
-       <Text style={{ fontSize: 18, alignSelf: 'center', color: 'white', fontFamily: 'VisbyBold', marginTop: 30 }}>hey</Text>
-      </View>
-     )
+  let currentIteration = 0;
+  let selectedOptionText = null;
+
+  const intervalId = setInterval(() => {
+   const randomIndex = Math.floor(Math.random() * options.length);
+
+   const updatedOptions = options.map((option, index) => {
+    if (index === randomIndex) {
+     selectedOptionText = option.text;
+     return { ...option, selected: true };
+    } else {
+     return { ...option, selected: false };
     }
-    <View style={styles.changeView}>
-     <TouchableWithoutFeedback onPress={() => {
-      if (selectedView == 0) {
-      } else {
-       handleSelection();
-      }
-     }
-     }>
-      <View style={selectedView == 0 ? styles.selectedView : styles.unSelectedView}>
-       <Text style={selectedView == 0 ? styles.selectedText : styles.unSelectedText}>Çark</Text>
+   });
+   setOptions(updatedOptions);
+   currentIteration++;
+   if (currentIteration === numIterations) {
+    clearInterval(intervalId);
+    setEditingItemId(null);
+    setTimeout(() => {
+     setResultModalVisible(true);
+     setResult(selectedOptionText);
+    }, delayToShowResultModal);
+   }
+  }, interval);
+ };
+
+
+
+
+
+
+
+ return (
+  <>
+   <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.container}>
+    <SafeAreaView style={{ flex: 1, paddingRight: 15, paddingLeft: 15, justifyContent: 'space-between' }}>
+     <View style={styles.topRow}>
+      <View>
+       <Text style={styles.title}>harbiden</Text>
+       <Text style={styles.title2}>Fark Etmez.</Text>
       </View>
-     </TouchableWithoutFeedback>
-     <TouchableWithoutFeedback onPress={() => {
-      if (selectedView == 1) {
-      } else {
-       handleSelection();
-      }
+      <Image style={{ width: windowWidth * .075 }} resizeMode='contain' source={require('../assets/images/menu.png')} />
+     </View>
+     {selectedView == 0 &&
+      (
+       <ScrollView style={styles.mainView}>
+        <FlatList
+         scrollEnabled={false}
+         showsVerticalScrollIndicator={false}
+         style={{ marginTop: 20, marginBottom: 50 }}
+         data={options}
+         renderItem={({ item }) => (
+          <TouchableWithoutFeedback onPress={() => { handleEditPress(item.id) }} >
+           <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={['rgba(255, 255, 255, 0.4)', 'transparent']}
+            style={[
+             styles.optionButton,
+             item.selected && styles.editingOption,
+            ]}
+           >
+            <TextInput
+             style={styles.optionText}
+             value={editingItemId === item.id ? editedText : item.text}
+             onChangeText={(newText) => setEditedText(newText)}
+             onSubmitEditing={() => handleSavePress(item.id, editedText)}
+             editable={editingItemId === item.id}
+            />
+           </LinearGradient>
+
+          </TouchableWithoutFeedback>
+         )}
+         ListFooterComponent={() => (
+          <Text style={{ color: 'white', fontSize: 25, alignSelf: 'center', marginTop: 20 }}>+</Text>
+         )}
+        />
+        <TouchableWithoutFeedback onPress={() => { handleFarketmez() }}>
+         <View style={styles.listFooter}>
+          <Text style={[styles.selectedText, { color: 'black' }]} >Fark Etmez</Text>
+         </View>
+        </TouchableWithoutFeedback>
+       </ScrollView>
+      )
      }
-     }>
-      <View style={selectedView == 1 ? styles.selectedView : styles.unSelectedView}>
-       <Text style={selectedView == 1 ? styles.selectedText : styles.unSelectedText}>Yazı Tura</Text>
-      </View>
-     </TouchableWithoutFeedback>
-    </View>
-   </SafeAreaView>
-  </ImageBackground >
+     {selectedView == 1 &&
+      (
+       <View style={styles.headsOrNails}>
+        <FlipCard
+
+         friction={6}
+         onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
+        >
+         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/nails.png')}></Image>
+         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/heads.png')}></Image>
+        </FlipCard>
+        <Text style={{ fontSize: 18, alignSelf: 'center', color: 'white', fontFamily: 'VisbyBold', marginTop: 30 }}>hey</Text>
+       </View>
+      )
+     }
+     <View style={styles.changeView}>
+      <TouchableWithoutFeedback onPress={() => {
+       if (selectedView == 0) {
+       } else {
+        handleSelection();
+       }
+      }
+      }>
+       <View style={selectedView == 0 ? styles.selectedView : styles.unSelectedView}>
+        <Text style={selectedView == 0 ? styles.selectedText : styles.unSelectedText}>Çark</Text>
+       </View>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => {
+       if (selectedView == 1) {
+       } else {
+        handleSelection();
+       }
+      }
+      }>
+       <View style={selectedView == 1 ? styles.selectedView : styles.unSelectedView}>
+        <Text style={selectedView == 1 ? styles.selectedText : styles.unSelectedText}>Yazı Tura</Text>
+       </View>
+      </TouchableWithoutFeedback>
+     </View>
+    </SafeAreaView>
+   </ImageBackground >
+   <ResultModal
+    modalVisible={resultModalVisible}
+    setModalVisible={setResultModalVisible}
+    result={result}
+   >
+
+   </ResultModal>
+  </>
  );
 }
 

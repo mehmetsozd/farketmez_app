@@ -10,10 +10,12 @@ const ResultModal = ({ modalVisible, setModalVisible, result }) => {
 
  return (
   <Modal
-   animationType="fade"
+   animationType="slide"
    transparent
    visible={modalVisible}
    onRequestClose={closeModal}
+   animationDuration={1500}
+
   >
    <View style={styles.ModalBackground}>
     <Image

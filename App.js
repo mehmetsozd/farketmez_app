@@ -4,8 +4,8 @@ import MainScreen from './src/screens/MainScreen';
 
 const App = () => {
   return (
-    <MainScreen />
-    // <HoldingPage />
+    <HoldingPage />
+
   );
 };
 

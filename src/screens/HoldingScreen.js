@@ -10,10 +10,7 @@ const MainFeedStack = createNativeStackNavigator();
 
 function MainFeedScreen() {
  return (
-  <MainFeedStack.Navigator
-   initialRouteName="SplashScreen"
-   screenOptions={{ headerShown: false, unmountOnBlur: true }}
-  >
+  <MainFeedStack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false, unmountOnBlur: true }} >
    <MainFeedStack.Screen name="SplashScreen" component={SplashScreen} />
    <MainFeedStack.Screen name="MainScreen" component={MainScreen} />
   </MainFeedStack.Navigator>
@@ -23,16 +20,9 @@ function MainFeedScreen() {
 
 function HoldingPage({ }) {
 
- React.useEffect(() => {
-  AppState.addEventListener('change', handleAppStateChange);
-  return () => {
-   AppState.removeEventListener('change', handleAppStateChange);
-  };
- }, []);
-
  return (
   <NavigationContainer>
-   <MainFeed />
+   <MainFeedScreen />
   </NavigationContainer>
  );
 }

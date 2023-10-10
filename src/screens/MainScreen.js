@@ -3,12 +3,10 @@ import {
  ImageBackground,
  Text,
  StyleSheet,
- SafeAreaView,
  View,
  Image,
  TouchableWithoutFeedback,
  FlatList,
- TouchableOpacity,
  TextInput,
  ScrollView
 } from 'react-native';
@@ -16,6 +14,7 @@ import { windowHeight, windowWidth } from '../global';
 import FlipCard from '../components/FlipCoin/FlipCard';
 import LinearGradient from 'react-native-linear-gradient';
 import ResultModal from '../components/resultModal';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function MainScreen({ navigation }) {
  const backgroundImage = require('../assets/images/mainbg.png');
@@ -91,12 +90,6 @@ function MainScreen({ navigation }) {
    }
   }, interval);
  };
-
-
-
-
-
-
 
  return (
   <>

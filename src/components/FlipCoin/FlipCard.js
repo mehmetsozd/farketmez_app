@@ -7,7 +7,6 @@ import {
  TouchableOpacity,
  Animated,
  Platform,
- Text,
 } from "react-native";
 
 import { ViewPropTypes } from 'deprecated-react-native-prop-types'
@@ -42,24 +41,25 @@ export default class FlipCard extends Component {
    return;
   }
   this.setState({ isFlipping: true });
+  this.props.onFlipEnd(this.state.isFlipped)
   this._startContinuousRotation();
  }
 
  _startContinuousRotation() {
-  this._rotateContinuously(); // Sürekli dönme işlemini başlat
+  this._rotateContinuously();
   setTimeout(() => {
-   this._stopContinuousRotation(); // 2 saniye sonra sürekli dönme işlemini durdur
+   this._stopContinuousRotation();
   }, 1000);
  }
 
  _stopContinuousRotation() {
-  clearInterval(this.continuousRotationInterval); // Sürekli dönme işlemini durdur
-  this._animation(!this.state.isFlipped); // Yavaşlayarak dönme işlemini başlat
+  clearInterval(this.continuousRotationInterval);
+  this._animation(!this.state.isFlipped);
  }
 
  _rotateContinuously() {
   this.continuousRotationInterval = setInterval(() => {
-   this._animation(!this.state.isFlipped); // Sürekli dönme işlemini gerçekleştir
+   this._animation(!this.state.isFlipped);
   }, 120);
  }
 
@@ -155,10 +155,16 @@ export default class FlipCard extends Component {
   )
  }
 }
+FlipCard.propTypes = {
+ friction: PropTypes.number,
+ perspective: PropTypes.number,
+ onFlipEnd: PropTypes.func,
+}
 
 FlipCard.defaultProps = {
  friction: 6,
  perspective: 1000,
+ onFlipEnd: () => { },
 }
 
 export class Face extends Component {

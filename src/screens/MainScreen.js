@@ -29,11 +29,12 @@ function MainScreen({ navigation }) {
  ];
 
  const [editingItemId, setEditingItemId] = useState(null);
+ const [loading, setLoading] = useState(false);
  const [options, setOptions] = useState(fakeData);
  const [editedText, setEditedText] = useState("Seçenek");
  const [resultModalVisible, setResultModalVisible] = React.useState(false);
  const [result, setResult] = useState(null);
-
+ const [handsOrNailResult, setHandsOrNailResult] = useState(null);
 
  const handleEditPress = (itemId) => {
   setEditingItemId(itemId);
@@ -67,6 +68,8 @@ function MainScreen({ navigation }) {
   let currentIteration = 0;
   let selectedOptionText = null;
 
+  setLoading(true);
+
   const intervalId = setInterval(() => {
    const randomIndex = Math.floor(Math.random() * options.length);
 
@@ -86,10 +89,12 @@ function MainScreen({ navigation }) {
     setTimeout(() => {
      setResultModalVisible(true);
      setResult(selectedOptionText);
+     setLoading(false);
     }, delayToShowResultModal);
    }
   }, interval);
  };
+
 
  return (
   <>
@@ -136,7 +141,12 @@ function MainScreen({ navigation }) {
           <Text style={{ color: 'white', fontSize: 25, alignSelf: 'center', marginTop: 20 }}>+</Text>
          )}
         />
-        <TouchableWithoutFeedback onPress={() => { handleFarketmez() }}>
+        <TouchableWithoutFeedback onPress={() => {
+         if (loading) {
+         } else {
+          handleFarketmez()
+         }
+        }}>
          <View style={styles.listFooter}>
           <Text style={[styles.selectedText, { color: 'black' }]} >Fark Etmez</Text>
          </View>
@@ -148,14 +158,13 @@ function MainScreen({ navigation }) {
       (
        <View style={styles.headsOrNails}>
         <FlipCard
-
          friction={6}
          onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
         >
-         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/nails.png')}></Image>
-         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/heads.png')}></Image>
+         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/nails.png')} />
+         <Image style={{ height: windowHeight * .25 }} resizeMode='contain' source={require('../assets/images/heads.png')} />
         </FlipCard>
-        <Text style={{ fontSize: 18, alignSelf: 'center', color: 'white', fontFamily: 'VisbyBold', marginTop: 30 }}>hey</Text>
+        <Text style={{ fontSize: 18, alignSelf: 'center', color: 'white', fontFamily: 'VisbyBold', marginTop: 30 }}>Yazı</Text>
        </View>
       )
      }
